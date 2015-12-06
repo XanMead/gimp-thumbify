@@ -1,3 +1,5 @@
+  (define (script-fu-thumbify))
+
   (script-fu-register
     "script-fu-thumbify"                   ;func name
     "Thumbify"                             ;menu label
@@ -8,4 +10,7 @@
     "copyright 2015, Xan Mead"             ;copyright notice
     "October 27, 1997"                     ;date created
     ""                                     ;image type that the script works on
+    SF-IMAGE
+    SF-DRAWABLE
   )
+  (script-fu-menu-register "script-fu-thumbify" "<Image>/Image/Transform")
