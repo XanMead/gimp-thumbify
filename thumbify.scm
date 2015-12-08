@@ -1,13 +1,15 @@
 (define (script-fu-thumbify theImage theDrawable)
 	(let*
 		(
-			(imageWidth (car (gimp-image-width theImage)))
-			(imageHeight (car (gimp-image-height theImage)))
+			(imageWidth (car (gimp-image-width theImage) ) )
+			(imageHeight (car (gimp-image-height theImage) ) )
+			(xOffset)
+			(yOffset)
 		)
 
 		;get image height and width
-		(set! imageWidth (car (gimp-image-width theImage)))
-		(set! imageHeight (car (gimp-image-height theImage)))
+		(set! imageWidth (car (gimp-image-width theImage) ) )
+		(set! imageHeight (car (gimp-image-height theImage) ) )
 		
 		;determine which is larger, and assign larger value to smaller
 		(if (> imageWidth imageHeight)
@@ -15,12 +17,16 @@
 			(set! imageWidth imageHeight) ;tall! make wider
 		)
 
+		;calculate offset
+		(set! xOffset (/ (- imageWidth (car (gimp-drawable-width theDrawable) ) ) 2 ) )
+		(set! yOffset (/ (- imageHeight (car (gimp-drawable-height theDrawable) ) ) 2 ) )
+
 		;start undo group
 		(gimp-image-undo-group-start theImage)
 		(gimp-context-push)
 
 		;extend image boundaries
-		(gimp-image-resize theImage imageWidth imageHeight 0 0)
+		(gimp-image-resize theImage imageWidth imageHeight xOffset yOffset)
 
 		;end undo group
 		(gimp-context-pop)
