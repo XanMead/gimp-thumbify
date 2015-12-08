@@ -5,6 +5,7 @@
 			(imageHeight (car (gimp-image-height theImage) ) )
 			(xOffset)
 			(yOffset)
+			(backgroundLayer)
 		)
 
 		;get image height and width
@@ -27,6 +28,12 @@
 
 		;extend image boundaries
 		(gimp-image-resize theImage imageWidth imageHeight xOffset yOffset)
+
+		;add black background
+		(set! backgroundLayer (car (gimp-layer-new theImage imageWidth imageHeight RGB-IMAGE "background" 100 NORMAL-MODE) ) )
+		(gimp-context-set-foreground '(0 0 0) )
+		(gimp-image-insert-layer theImage backgroundLayer 0 1)
+		(gimp-drawable-fill backgroundLayer FOREGROUND-FILL)
 
 		;end undo group
 		(gimp-context-pop)
